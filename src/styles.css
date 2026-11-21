@@ -1876,3 +1876,11 @@ p { text-wrap: pretty; }
   .hero__cue { display: none; }
   .gate { overflow-y: auto; }
 }
+
+/* Slide-in transforms must never widen the page: a phone would zoom out to fit them. */
+html, body { overflow-x: clip; }
+main, .couple, .section { overflow-x: clip; }
+@media (max-width: 719px) {
+  .couple__grid > .rv:first-child,
+  .couple__grid > .rv:last-child { transform: translateY(24px); }
+}
