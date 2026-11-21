@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { gallery } from '../config';
 
 /**
@@ -8,6 +8,8 @@ import { gallery } from '../config';
 export function Gallery() {
   const [open, setOpen] = useState<number | null>(null);
   const [failed, setFailed] = useState<ReadonlySet<string>>(new Set());
+
+  const touchX = useRef<number | null>(null);
 
   const photos = gallery.filter((p) => !failed.has(p.src));
   const count = photos.length;
@@ -57,7 +59,19 @@ export function Gallery() {
       </div>
 
       {current && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick={() => setOpen(null)}>
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer"
+          onClick={() => setOpen(null)}
+          onTouchStart={(e) => {
+            touchX.current = e.touches[0]?.clientX ?? null;
+          }}
+          onTouchEnd={(e) => {
+            const start = touchX.current;
+            touchX.current = null;
+            const end = e.changedTouches[0]?.clientX;
+            if (start === null || end === undefined) return;
+            if (Math.abs(end - start) > 50) step(end < start ? 1 : -1);
+          }}
+        >
           <img className="lightbox__img" src={current.src} alt={current.alt} onClick={(e) => e.stopPropagation()} />
           <button type="button" className="lightbox__btn lightbox__close" onClick={() => setOpen(null)} aria-label="Close photo">
             &times;

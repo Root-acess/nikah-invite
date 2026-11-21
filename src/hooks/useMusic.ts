@@ -316,6 +316,22 @@ export function useMusic() {
     else void play();
   }, [playing, play, pause]);
 
+  // Phones keep audio running after the guest switches apps or locks the screen. Pause then, resume on return.
+  useEffect(() => {
+    let resumeOnReturn = false;
+    const onVisibility = () => {
+      if (document.hidden) {
+        resumeOnReturn = wantPlayRef.current;
+        if (resumeOnReturn) pause();
+      } else if (resumeOnReturn) {
+        resumeOnReturn = false;
+        void play();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, [pause, play]);
+
   useEffect(
     () => () => {
       fileRef.current?.pause();

@@ -185,6 +185,9 @@ export function Rsvp() {
             <label htmlFor="rsvp-name">Your name</label>
             <input
               id="rsvp-name"
+              autoCapitalize="words"
+              autoComplete="name"
+              enterKeyHint="next"
               type="text"
               autoComplete="name"
               value={form.name}

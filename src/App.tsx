@@ -13,6 +13,7 @@ import { Family } from './components/Family';
 import { Rsvp } from './components/Rsvp';
 import { Footer } from './components/Footer';
 import { MusicButton } from './components/MusicButton';
+import { ReplyPill } from './components/ReplyPill';
 import { Sparkles } from './components/Sparkles';
 import { useMusic } from './hooks/useMusic';
 
@@ -85,6 +86,7 @@ export default function App() {
       </main>
       <Footer />
       {opened && <Sparkles />}
+      {opened && <ReplyPill />}
       {opened && <MusicButton playing={music.playing} onToggle={music.toggle} />}
     </>
   );

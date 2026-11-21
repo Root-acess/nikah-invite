@@ -94,6 +94,16 @@ The page only asks for arrival time when a guest ticks the Nikah, because arriva
 `=SUMIFS(C:C, E:E, "Veg")` and `=SUMIFS(C:C, E:E, "Non-veg")` (adjust the column letters to your sheet) to
 total guests by meal, and a `COUNTIF` on the events column to count each day.
 
+## Phones
+
+Built phone-first, since the invite is shared by WhatsApp. Buttons are at least 48 px, the page respects notches and
+the browser's moving address bar, the map does not trap one-finger scrolling (use the Directions button), photos swipe,
+a floating **Reply** button follows the guest down the page, and the music pauses if the guest switches apps.
+
+**WhatsApp preview:** `public/og.png` is the picture shown when the link is pasted. Apps need the full web address
+for it, so build with it set: `SITE_URL=https://your-site.example npm run build` (Netlify and Vercel are detected
+automatically). Without it the preview tags are left out. WhatsApp caches previews, so test with a fresh link.
+
 ## Notes
 
 - Respects `prefers-reduced-motion`: everything shows, nothing moves.
