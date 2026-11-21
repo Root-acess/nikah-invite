@@ -189,7 +189,6 @@ export function Rsvp() {
               autoComplete="name"
               enterKeyHint="next"
               type="text"
-              autoComplete="name"
               value={form.name}
               onChange={(e) => set('name', e.target.value)}
               aria-invalid={Boolean(errors.name)}

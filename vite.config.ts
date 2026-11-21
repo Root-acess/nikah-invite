@@ -8,7 +8,8 @@ import react from '@vitejs/plugin-react';
  * Without one, the image tags are removed rather than left pointing nowhere.
  */
 function siteUrl(): string {
-  const raw = process.env.SITE_URL ?? process.env.URL ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '');
+  const env = (globalThis as typeof globalThis & { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+  const raw = env.SITE_URL ?? env.URL ?? (env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}` : '');
   return raw.replace(/\/+$/, '');
 }
 
@@ -17,7 +18,7 @@ function socialPreview(): Plugin {
     name: 'social-preview',
     transformIndexHtml(html) {
       const url = siteUrl();
-      if (url) return html.replaceAll('%SITE_URL%', url);
+      if (url) return html.replace(/%SITE_URL%/g, url);
       return html.replace(/^\s*<meta[^>]*%SITE_URL%[^>]*>\n?/gm, '');
     },
   };
