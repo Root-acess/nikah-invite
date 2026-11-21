@@ -67,7 +67,7 @@ export function Gate({ onOpen }: GateProps) {
         <button type="button" className="btn btn--solid gate__btn" onClick={open} autoFocus>
           Open invitation
         </button>
-        <p className="gate__hint">Turn your sound on. A nasheed will play.</p>
+        <p className="gate__hint">Turn your sound on. Music will play.</p>
       </div>
     </div>
   );

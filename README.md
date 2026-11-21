@@ -39,10 +39,21 @@ use.
 
 ## Music
 
-Put your nasheed at `public/audio/nasheed.mp3`. Browsers only allow sound after a tap, so music starts when the
-guest taps **Open invitation**, and a round button (bottom right) pauses or resumes it. Use a track you have the
-right to use. A vocals-only nasheed, or one with a duff (frame drum), is the usual choice, so ask the family.
-Until the file exists, a soft synthesized drone plays so the button still works.
+The music is a YouTube video, set by `MUSIC.youtubeId` in `src/config.ts` (currently `BzmgZfwuA50`). It plays
+through YouTube's own embedded player, hidden off-screen, when the guest taps **Open invitation** (browsers only
+allow sound after a tap). A round button (bottom right) pauses or resumes it.
+
+Things to know:
+
+- **Check it before sending.** Open the deployed site on a phone and tap Open invitation. Some videos block
+  embedding, and some music videos are removed or blocked in certain countries. If YouTube can't play it, the page
+  falls back to `public/audio/nasheed.mp3` if that file exists, and otherwise to a soft synthesized drone.
+- **It will not play from a double-clicked `index.html` file.** YouTube refuses embeds with no web address. It works
+  on `npm run dev` and on the deployed https site.
+- **Ads and links.** YouTube may show an ad before the track on some videos, and the video stays under YouTube's
+  terms and the owner's rights. For a fully controlled version, use your own licensed audio: set `youtubeId` to `''`
+  and save the file as `public/audio/nasheed.mp3`.
+- A vocals-only nasheed, or one with a duff (frame drum), is the usual choice, so ask the family.
 
 ## Google Form (events, veg / non-veg, arrival time)
 
