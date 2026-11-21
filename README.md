@@ -39,21 +39,27 @@ use.
 
 ## Music
 
-The music is a YouTube video, set by `MUSIC.youtubeId` in `src/config.ts` (currently `BzmgZfwuA50`). It plays
-through YouTube's own embedded player, hidden off-screen, when the guest taps **Open invitation** (browsers only
-allow sound after a tap). A round button (bottom right) pauses or resumes it.
+The nasheed is `public/audio/nasheed.mp3` ("Inscribed Love", 3:02). It starts when the guest taps **Open invitation**
+(browsers only allow sound after a tap) and loops. A round button (bottom right) pauses and resumes it.
 
-Things to know:
+- **Change the music:** replace `public/audio/nasheed.mp3` with another file of the same name.
+- **Rights:** the track comes from the Eternal Blessings Music channel. Check you may use it on a public site, or ask
+  them. Using your own recording or a licensed track avoids the question.
+- **File size:** it is 7.3 MB, which streams fine. To make guests on mobile data download less, compress it:
+  `ffmpeg -i nasheed.mp3 -b:a 128k nasheed-small.mp3` (about 2.9 MB), then save it as `nasheed.mp3`.
+- **YouTube instead (optional):** set `MUSIC.youtubeId` in `src/config.ts` to a video ID. It then plays through a
+  hidden YouTube player and falls back to the mp3 if YouTube cannot play it. It will not work from a `file://` page.
+- If neither works, a soft synthesized drone plays so the button still does something.
 
-- **Check it before sending.** Open the deployed site on a phone and tap Open invitation. Some videos block
-  embedding, and some music videos are removed or blocked in certain countries. If YouTube can't play it, the page
-  falls back to `public/audio/nasheed.mp3` if that file exists, and otherwise to a soft synthesized drone.
-- **It will not play from a double-clicked `index.html` file.** YouTube refuses embeds with no web address. It works
-  on `npm run dev` and on the deployed https site.
-- **Ads and links.** YouTube may show an ad before the track on some videos, and the video stays under YouTube's
-  terms and the owner's rights. For a fully controlled version, use your own licensed audio: set `youtubeId` to `''`
-  and save the file as `public/audio/nasheed.mp3`.
-- A vocals-only nasheed, or one with a duff (frame drum), is the usual choice, so ask the family.
+## Animations
+
+Entrance doors with drawing filigree; a turning geometric rosette; swinging lanterns; gold sparkles drifting over the
+page; a gold glint passing through the names; content gliding in as you scroll; avatars that breathe, blink and wear
+swinging jewellery; a countdown that ticks; and glows (the rosette, the crescent, the countdown digits, the music
+button) that **pulse with the nasheed** while it plays.
+
+Everything stops for people who set "reduce motion" on their device. The pulse needs the mp3 to be served from the same
+site as the page, which is the normal case when you deploy it.
 
 ## Google Form (events, veg / non-veg, arrival time)
 

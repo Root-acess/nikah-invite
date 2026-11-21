@@ -1520,3 +1520,278 @@ a {
     opacity: 0.6;
   }
 }
+
+/* ==========================================================================
+   Extra motion
+   ========================================================================== */
+
+/* ---------- Scroll reveals (classes are added by useScrollReveal in App) ---------- */
+
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(5px);
+  transition:
+    opacity 0.9s var(--ease) var(--d, 0ms),
+    transform 0.9s var(--ease) var(--d, 0ms),
+    filter 0.9s var(--ease) var(--d, 0ms),
+    clip-path 1.1s var(--ease) var(--d, 0ms);
+}
+
+.rv.is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.couple__grid > .rv:first-child {
+  transform: translate(-44px, 18px);
+}
+
+.couple__grid > .rv:last-child {
+  transform: translate(44px, 18px);
+}
+
+.couple__grid > .rv.is-in {
+  transform: none;
+}
+
+.count__unit.rv {
+  transform: translateY(26px) scale(0.88);
+}
+
+.count__unit.rv.is-in {
+  transform: none;
+}
+
+.gallery__tile.rv {
+  transform: scale(0.94);
+  clip-path: inset(14% 14% 14% 14% round 6px);
+}
+
+.gallery__tile.rv.is-in {
+  transform: none;
+  clip-path: inset(0 0 0 0 round 3px);
+}
+
+/* ---------- Sparkles canvas ---------- */
+
+.sparkles {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- Names: a slow gold glint passes through them ---------- */
+
+.hero__name {
+  background: linear-gradient(100deg, var(--ivory) 0 42%, #fff1c2 50%, var(--ivory) 58% 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.is-revealed .hero__name {
+  animation:
+    name-in 1.8s var(--ease) both,
+    glint 9s ease-in-out infinite;
+}
+
+.is-revealed .hero__name--a {
+  animation-delay: 2s, 4.6s;
+}
+
+.is-revealed .hero__name--c {
+  animation-delay: 2.7s, 5.1s;
+}
+
+@keyframes glint {
+  0%,
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* ---------- More lanterns ---------- */
+
+.hero__lantern--l2,
+.hero__lantern--r2 {
+  width: clamp(32px, 4.6vw, 54px);
+}
+
+.hero__lantern--l2 {
+  left: clamp(80px, 19vw, 300px);
+  top: -118px;
+}
+
+.hero__lantern--r2 {
+  right: clamp(80px, 19vw, 300px);
+  top: -72px;
+}
+
+.is-revealed .hero__lantern--l2 {
+  animation-duration: 1.4s, 8.5s;
+  animation-delay: 1.6s, 0s;
+}
+
+.is-revealed .hero__lantern--r2 {
+  animation-duration: 1.4s, 9.5s;
+  animation-delay: 1.9s, 0s;
+  animation-direction: normal, alternate-reverse;
+}
+
+@media (max-width: 640px) {
+  .hero__lantern--l2,
+  .hero__lantern--r2 {
+    display: none;
+  }
+}
+
+/* ---------- Avatars: they breathe, blink and wear swinging jewellery ---------- */
+
+.archframe__art svg {
+  transform-origin: 50% 100%;
+  animation: breathe 7s ease-in-out infinite;
+}
+
+.avatar-blink,
+.avatar-swing,
+.avatar-plume {
+  transform-box: fill-box;
+}
+
+.avatar-blink {
+  transform-origin: 50% 50%;
+  animation: blink 5.5s infinite;
+}
+
+.avatar-swing {
+  transform-origin: 50% 0;
+  animation: swing-small 3.2s ease-in-out infinite alternate;
+}
+
+.avatar-swing--b {
+  animation-delay: -1.4s;
+}
+
+.avatar-plume {
+  transform-origin: 18% 100%;
+  animation: swing-small 4.4s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    scale: 1.02;
+  }
+  50% {
+    scale: 1.055;
+  }
+}
+
+@keyframes blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes swing-small {
+  from {
+    transform: rotate(-7deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
+}
+
+/* ---------- Buttons: a glint crosses them ---------- */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--solid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.6) 50%, transparent 68%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+
+.btn--solid:hover::after {
+  transform: translateX(130%);
+  transition: transform 0.8s var(--ease);
+}
+
+.gate__btn::after {
+  animation: sheen 3.8s 3.6s ease-in-out infinite;
+}
+
+@keyframes sheen {
+  0% {
+    transform: translateX(-130%);
+  }
+  35%,
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+/* ---------- Music-reactive glow (--beat is set by useMusic while the nasheed plays) ---------- */
+
+.hero__rosette {
+  scale: calc(1 + var(--beat, 0) * 0.025);
+  filter: drop-shadow(0 0 calc(var(--beat, 0) * 22px) rgba(228, 185, 91, calc(var(--beat, 0) * 0.6)));
+}
+
+.hero__crescent {
+  filter: drop-shadow(0 0 calc(14px + var(--beat, 0) * 30px) rgba(228, 185, 91, calc(0.45 + var(--beat, 0) * 0.45)));
+}
+
+.music.is-playing {
+  box-shadow: 0 0 0 calc(var(--beat, 0) * 9px) rgba(228, 185, 91, calc(var(--beat, 0) * 0.3));
+}
+
+.countdown .count__num {
+  text-shadow: 0 0 calc(var(--beat, 0) * 18px) rgba(228, 185, 91, calc(var(--beat, 0) * 0.7));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rv.is-in {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+  }
+
+  .archframe__art svg {
+    animation: none;
+  }
+
+  .hero__name {
+    background: none;
+    color: var(--ivory);
+  }
+
+  .hero__rosette,
+  .hero__crescent {
+    filter: none;
+    scale: none;
+  }
+}

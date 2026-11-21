@@ -9,6 +9,8 @@ export function Hero({ revealed }: { revealed: boolean }) {
       <Rosette className="hero__rosette" />
       <Lantern className="hero__lantern hero__lantern--l" />
       <Lantern className="hero__lantern hero__lantern--r" />
+      <Lantern className="hero__lantern hero__lantern--l2" />
+      <Lantern className="hero__lantern hero__lantern--r2" />
 
       <div className="hero__content">
         <Crescent className="hero__crescent hero__item" />

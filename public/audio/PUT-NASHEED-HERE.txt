@@ -1,9 +1,0 @@
-Put your music file in this folder and name it:  nasheed.mp3
-
-Use a nasheed you have the right to use (your own recording, a licensed track,
-or a royalty-free one). A vocals-only nasheed or one with a duff (frame drum)
-is the traditional choice and avoids the question some families have about
-instruments, so check with your friend's family.
-
-Until nasheed.mp3 exists, the page plays a soft synthesized drone instead so the
-music button still works. Delete this note whenever you like.

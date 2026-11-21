@@ -49,7 +49,7 @@ function GroomArt() {
         <path d="M117 169Q130 160 143 168" />
         <path d="M157 168Q170 160 183 169" />
       </g>
-      <g>
+      <g className="avatar-blink">
         <ellipse cx="130" cy="183" rx="7" ry="4.5" fill="#fff" />
         <ellipse cx="170" cy="183" rx="7" ry="4.5" fill="#fff" />
         <circle cx="130" cy="183" r="3.4" fill="#2A1A14" />
@@ -65,7 +65,7 @@ function GroomArt() {
         <path d="M90 150C124 124 178 122 210 148" stroke="#5E1420" />
         <path d="M106 110C136 88 170 90 195 110" stroke="#A33345" strokeWidth="5" />
       </g>
-      <path d="M150 100C145 72 160 52 174 42C170 62 166 82 157 100Z" fill={GOLD} />
+      <path className="avatar-plume" d="M150 100C145 72 160 52 174 42C170 62 166 82 157 100Z" fill={GOLD} />
       <ellipse cx="150" cy="110" rx="9" ry="12" fill={GOLD} />
       <circle cx="150" cy="110" r="3.5" fill="#B3243B" />
     </svg>
@@ -104,10 +104,12 @@ function BrideArt() {
         <path d="M120 172Q131 163 142 171" />
         <path d="M158 171Q169 163 180 172" />
       </g>
-      <ellipse cx="131" cy="185" rx="7" ry="4.2" fill="#fff" />
-      <ellipse cx="169" cy="185" rx="7" ry="4.2" fill="#fff" />
-      <circle cx="131" cy="185" r="3.3" fill="#2A1A14" />
-      <circle cx="169" cy="185" r="3.3" fill="#2A1A14" />
+      <g className="avatar-blink">
+        <ellipse cx="131" cy="185" rx="7" ry="4.2" fill="#fff" />
+        <ellipse cx="169" cy="185" rx="7" ry="4.2" fill="#fff" />
+        <circle cx="131" cy="185" r="3.3" fill="#2A1A14" />
+        <circle cx="169" cy="185" r="3.3" fill="#2A1A14" />
+      </g>
       <g stroke="#1A0F0C" strokeWidth="2.6" strokeLinecap="round" fill="none">
         <path d="M122 184Q131 178 140 184M122 184L118 181" />
         <path d="M160 184Q169 178 178 184M178 184L182 181" />
@@ -122,10 +124,14 @@ function BrideArt() {
       <circle cx="150" cy="159" r="6.5" fill={GOLD} />
       <circle cx="150" cy="159" r="2.6" fill="#B3243B" />
       <g fill={GOLD}>
-        <circle cx="98" cy="226" r="4" />
-        <path d="M91 232Q98 256 105 232Z" />
-        <circle cx="202" cy="226" r="4" />
-        <path d="M195 232Q202 256 209 232Z" />
+        <g className="avatar-swing">
+          <circle cx="98" cy="226" r="4" />
+          <path d="M91 232Q98 256 105 232Z" />
+        </g>
+        <g className="avatar-swing avatar-swing--b">
+          <circle cx="202" cy="226" r="4" />
+          <path d="M195 232Q202 256 209 232Z" />
+        </g>
       </g>
     </svg>
   );

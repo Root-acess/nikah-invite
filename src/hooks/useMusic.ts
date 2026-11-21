@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MUSIC } from '../config';
+import { beat } from '../utils/beat';
 
 /** The small part of the YouTube IFrame Player API we use. */
 interface YTPlayer {
@@ -95,7 +96,84 @@ export function useMusic() {
   const ytReadyRef = useRef(false);
   const ytFailedRef = useRef(!MUSIC.youtubeId);
   const wantPlayRef = useRef(false);
+  const analyserRef = useRef<{ ctx: AudioContext; analyser: AnalyserNode } | null>(null);
+  const rafRef = useRef(0);
   const [playing, setPlaying] = useState(false);
+
+  /** Publishes the loudness of the vocals as --beat (0 to 1) for glows, and as beat.value for the sparkles. */
+  const startBeat = useCallback(() => {
+    const a = analyserRef.current;
+    if (!a) return;
+    const data = new Uint8Array(a.analyser.frequencyBinCount);
+    const root = document.documentElement.style;
+    let smooth = 0;
+    let peak = 0.05;
+    let avg = -1;
+    let shown = -1;
+    const tick = () => {
+      a.analyser.getByteFrequencyData(data);
+      let sum = 0;
+      const bins = 14; // roughly the vocal range at fftSize 256
+      for (let i = 0; i < bins; i++) sum += data[i];
+      const level = sum / (bins * 255);
+      if (avg < 0) avg = level; // start from the first reading, not from silence
+      avg += (level - avg) * 0.01; // slow average: what "normal" loudness is for this passage
+      peak = Math.max(level, peak * 0.997, avg + 0.02); // adapts to how loud the track is
+      const base = avg; // only moments louder than the passage's average count as a beat
+      const target = Math.pow(Math.min(1, Math.max(0, (level - base) / (peak - base))), 1.3);
+      smooth += (target - smooth) * 0.25;
+      const value = Math.min(1, Math.max(0, smooth));
+      beat.value = value;
+      if (Math.abs(value - shown) > 0.01) {
+        shown = value;
+        root.setProperty('--beat', value.toFixed(2));
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  const stopBeat = useCallback(() => {
+    cancelAnimationFrame(rafRef.current);
+    beat.value = 0;
+    document.documentElement.style.setProperty('--beat', '0');
+  }, []);
+
+  /** Routes the playing file through an analyser. If anything fails, the music still plays; only the pulse is lost. */
+  const attachAnalyser = useCallback(
+    async (audio: HTMLAudioElement) => {
+      if (analyserRef.current) {
+        startBeat();
+        return;
+      }
+      try {
+        // Routing audio from another origin (or a file:// page) through an analyser would silence it. Skip the pulse then.
+        if (window.location.protocol === 'file:') return;
+        if (new URL(audio.currentSrc || audio.src, window.location.href).origin !== window.location.origin) return;
+        const Ctor: typeof AudioContext | undefined =
+          window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+        if (!Ctor) return;
+        const ctx = new Ctor();
+        await ctx.resume();
+        if (ctx.state !== 'running') {
+          void ctx.close(); // routing through a stopped context would silence the music
+          return;
+        }
+        const source = ctx.createMediaElementSource(audio);
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0.8;
+        source.connect(analyser);
+        analyser.connect(ctx.destination);
+        analyserRef.current = { ctx, analyser };
+        if (!audio.paused) startBeat();
+      } catch {
+        // Visuals stay calm.
+      }
+    },
+    [startBeat],
+  );
 
   /** mp3 file first, then the synthesized drone. */
   const playLocal = useCallback(async () => {
@@ -108,12 +186,14 @@ export function useMusic() {
       const audio = new Audio(MUSIC.src);
       audio.loop = true;
       audio.volume = MUSIC.volume;
+      audio.preload = 'metadata';
       fileRef.current = audio;
     }
     try {
       await fileRef.current.play();
       engineRef.current = 'file';
       setPlaying(true);
+      void attachAnalyser(fileRef.current);
     } catch {
       synthRef.current ??= createSynth();
       if (synthRef.current) {
@@ -124,7 +204,7 @@ export function useMusic() {
         setPlaying(false);
       }
     }
-  }, []);
+  }, [attachAnalyser]);
 
   // Load the YouTube player once, hidden off-screen, so it is ready before the guest taps Open.
   useEffect(() => {
@@ -227,8 +307,9 @@ export function useMusic() {
     if (engineRef.current === 'youtube') ytRef.current?.pauseVideo();
     if (engineRef.current === 'file') fileRef.current?.pause();
     if (engineRef.current === 'synth') void synthRef.current?.ctx.suspend();
+    stopBeat();
     setPlaying(false);
-  }, []);
+  }, [stopBeat]);
 
   const toggle = useCallback(() => {
     if (playing) pause();

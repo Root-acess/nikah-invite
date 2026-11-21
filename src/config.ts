@@ -100,11 +100,11 @@ export const gallery: GalleryPhoto[] = [
 
 export const MUSIC = {
   /**
-   * YouTube video that plays when the guest taps "Open invitation" (the ID after v= in the link).
-   * Set to '' to skip YouTube and use the local file below instead.
+   * Optional YouTube video ID (the part after v= in a YouTube link). Leave '' to use the audio file below.
+   * If a video is set but YouTube cannot play it, the page falls back to the file.
    */
-  youtubeId: 'BzmgZfwuA50',
-  /** Fallback if YouTube cannot play: put a file at public/audio/nasheed.mp3 */
+  youtubeId: '',
+  /** The nasheed. Replace public/audio/nasheed.mp3 to change the music. */
   src: `${import.meta.env.BASE_URL}audio/nasheed.mp3`,
   volume: 0.55,
 };
