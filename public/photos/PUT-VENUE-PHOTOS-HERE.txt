@@ -1,0 +1,7 @@
+Save photos of Woodland Odisha Restaurant & Convention in this folder, named:
+
+  venue-1.jpg  venue-2.jpg  venue-3.jpg  venue-4.jpg  venue-5.jpg  venue-6.jpg
+
+Use photos you took, photos the venue sent you, or ones the venue's own team says you may use.
+Missing files are skipped, and the "Around the venue" section stays hidden until at least one exists.
+Landscape photos work best for venue-2 and venue-6, portrait for venue-1 and venue-5.
