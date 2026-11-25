@@ -4,6 +4,7 @@ import { RSVP, contacts } from '../config';
 import { telOf } from '../utils/format';
 import { submitRsvp } from '../utils/rsvp';
 import type { RsvpMode } from '../utils/rsvp';
+import { Icon } from './Icons';
 import { Crescent } from './Ornaments';
 
 type Attending = 'Yes' | 'No' | '';
@@ -50,6 +51,7 @@ function Contacts() {
           <li className="contacts__item" key={c.phone}>
             <span className="contacts__name">{c.name}</span>
             <a className="contacts__num" href={`tel:${telOf(c.phone)}`}>
+              <Icon name="phone" />
               {c.phone}
             </a>
             <a
@@ -59,6 +61,7 @@ function Contacts() {
               rel="noopener noreferrer"
               aria-label={`Message ${c.name} on WhatsApp`}
             >
+              <Icon name="whatsapp" />
               WhatsApp
             </a>
           </li>
@@ -186,9 +189,9 @@ export function Rsvp() {
             <input
               id="rsvp-name"
               autoCapitalize="words"
-              autoComplete="name"
               enterKeyHint="next"
               type="text"
+              autoComplete="name"
               value={form.name}
               onChange={(e) => set('name', e.target.value)}
               aria-invalid={Boolean(errors.name)}

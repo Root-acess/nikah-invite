@@ -3,8 +3,10 @@ export interface Person {
   name: string;
   fullName: string;
   parents: string;
-  /** Which illustrated avatar to draw. */
-  avatar: 'groom' | 'bride';
+  /** Illustrated portrait, saved in public/people/. */
+  photo: string;
+  /** Where to anchor the picture inside the arch frame (CSS object-position). */
+  photoPosition?: string;
 }
 
 export interface WeddingEvent {
@@ -17,9 +19,17 @@ export interface WeddingEvent {
   /** Shown to guests instead of a clock time, e.g. "After Namaz-e-Zohar". */
   timeLabel?: string;
   description: string;
+  /** Optional picture shown with the event, saved in public/events/. */
+  image?: string;
+  /** Width and height of that picture in pixels, so the page keeps its shape while it loads. */
+  imageSize?: [number, number];
 }
 
 export interface VenueInfo {
+  /** Heading for this venue block, e.g. "Mehndi & Haldi and Nikah". */
+  heading: string;
+  /** ids of the events held here (they get an "add to calendar" button). */
+  eventIds: string[];
   name: string;
   address: string;
   city: string;
@@ -35,9 +45,19 @@ export interface GalleryPhoto {
   wide?: boolean;
 }
 
+export interface FamilyMember {
+  name: string;
+  /** Where the face is in the photo, as a percentage from the left and from the top. */
+  x: number;
+  y: number;
+}
+
 export interface FamilyGroup {
   title: string;
-  names: string[];
+  photo: { src: string; width: number; height: number; alt: string };
+  /** Width of the hover area over each face, as a percentage of the photo width. */
+  spot: number;
+  members: FamilyMember[];
 }
 
 export interface Contact {

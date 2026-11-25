@@ -1,5 +1,7 @@
 import type { Contact, FamilyGroup, GalleryPhoto, Person, RsvpConfig, VenueInfo, WeddingEvent } from './types';
 
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 /**
  * Everything you need to edit lives in this file.
  * Times are Indian Standard Time (+05:30).
@@ -9,14 +11,16 @@ export const groom: Person = {
   name: 'Iftekhar',
   fullName: 'Sayed Iftekhar Ali',
   parents: 'Beloved son of Sahib Sayed Tahir Ali & Sahiba Sakina Bano',
-  avatar: 'groom',
+  photo: asset('people/groom.jpg'),
+  photoPosition: '50% 18%',
 };
 
 export const bride: Person = {
   name: 'Sagufta',
   fullName: 'Sagufta Anjum',
   parents: 'Beloved daughter of Alhajji Mir Sarajul & Alhaja Maherun Nesha',
-  avatar: 'bride',
+  photo: asset('people/bride.jpg'),
+  photoPosition: '50% 12%',
 };
 
 export const tagline = 'Two hearts, one promise, a lifetime of togetherness.';
@@ -33,55 +37,136 @@ export const nikah: WeddingEvent = {
   endISO: '2026-12-23T16:00:00+05:30',
   timeLabel: 'After Namaz-e-Zohar',
   description: 'The Nikah ceremony, followed by dua, refreshments and lunch.',
+  image: asset('events/nikah.jpg'),
+  imageSize: [1200, 675],
+};
+
+/** Shown under the countdown. Written from the tabular / Umm al-Qura calendars; the date can differ by a day with moon sighting. */
+export const nikahHijri = { en: '14 Rajab 1448 AH', ar: '١٤ رجب المرجب ١٤٤٨ هـ' };
+
+export const walima: WeddingEvent = {
+  id: 'walima',
+  title: 'Walima',
+  arabic: 'وَلِيمَة',
+  startISO: '2027-01-02T19:30:00+05:30',
+  endISO: '2027-01-02T22:30:00+05:30',
+  timeLabel: '7:30 PM onwards',
+  description: 'A grand celebration of love, family and togetherness. Guest arrival and reception, followed by dinner.',
 };
 
 export const events: WeddingEvent[] = [
   {
     id: 'mehndi',
-    title: 'Mehndi',
-    arabic: 'مہندی',
+    title: 'Mehndi & Haldi',
+    arabic: 'مہندی اور ہلدی',
     startISO: '2026-12-22T17:00:00+05:30',
     endISO: '2026-12-22T21:00:00+05:30',
     timeLabel: 'Evening',
-    description: 'An evening of henna, songs and family, the day before the Nikah.',
+    description:
+      'An evening of haldi, laughter and togetherness, celebrating love and cherished family bonds before the Nikah.',
+    image: asset('events/mehndi-haldi.jpg'),
+    imageSize: [1200, 800],
   },
   nikah,
+  walima,
 ];
 
-export const venue: VenueInfo = {
-  name: 'Woodland Odisha Restaurant & Convention',
-  address: 'State Highway 60, Anantapur, Bhubaneswar, Jagannathpur, Odisha – 751032',
-  city: 'Bhubaneswar, Odisha',
-  mapQuery: 'Woodland Odisha Restaurant & Convention, State Highway 60, Anantapur, Bhubaneswar, Odisha 751032',
-  note: 'About 3 km from Phulnakhara Square. The Mehndi and the Nikah are both held here.',
+export const venues: VenueInfo[] = [
+  {
+    heading: 'Mehndi & Haldi and Nikah',
+    eventIds: ['mehndi', 'nikah'],
+    name: 'Woodland Odisha Restaurant & Convention',
+    address: 'State Highway 60, Anantapur, Bhubaneswar, Jagannathpur, Odisha – 751032',
+    city: 'Bhubaneswar, Odisha',
+    mapQuery: 'Woodland Odisha Restaurant & Convention, State Highway 60, Anantapur, Bhubaneswar, Odisha 751032',
+    note: 'About 3 km from Phulnakhara Square. The Mehndi & Haldi and the Nikah are both held here.',
+  },
+  {
+    heading: 'Walima',
+    eventIds: ['walima'],
+    name: 'Aiwaan-E-Shaahi Marriage Hall & Banquet',
+    address: 'Anand Bhawan Lane, Rourkela – 769901',
+    city: 'Rourkela, Odisha',
+    mapQuery: 'Aiwaan-E-Shaahi Marriage Hall & Banquet, Anand Bhawan Lane, Rourkela 769901',
+    note: 'A unit of The Green Olive.',
+  },
+];
+
+/** "A few words from the heart". */
+export const quote = 'To love and be loved is to feel the sun from both sides.';
+
+/** Shown near the end of the page. Edit freely. */
+export const forgiveness = {
+  title: 'A humble request for forgiveness',
+  bismillah: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+  paragraphs: [
+    'As we begin this beautiful journey with the blessings of Almighty Allah, we humbly seek your forgiveness for anything that may have caused you hurt, inconvenience or displeasure.',
+    'If, at any time before, during or after the Nikah celebrations, our words, actions or circumstances have unintentionally or otherwise caused any hurt; if there has been any misunderstanding, miscommunication, delay in response, inconvenience or shortcoming in our arrangements or hospitality, we sincerely seek your pardon.',
+    'Whatever may have been the reason, whether intentional or unintentional, known or unknown, we request you to kindly overlook our shortcomings and forgive us with an open heart.',
+  ],
+  // The text you sent stopped at "Your love, ..." so this last line is a placeholder. Replace it with the real one.
+  ending: 'Your love, prayers and kindness mean everything to us.',
 };
-
-/** "A few words from the heart". One array per couplet. */
-export const poem: string[][] = [
-  ['Do dilon ka khoobsurat fasana hai,', 'Mohabbat se saja ek naya zamana hai.'],
-  ['Har khushi mein aap shaamil ho jaayein,', 'Yahi hamara dil se arz kiya jaana hai.'],
-];
 
 export const family = {
   lead: 'With love & best wishes from',
   name: 'The Sayyed family',
+  /**
+   * Each member's x / y is where their face sits in the photo (percent from left, percent from top).
+   * The names are matched to the faces in the order I guessed, so check them against the photos.
+   */
   groups: [
-    { title: 'Our little ones', names: ['Ameerah', 'Mahenoor', 'Shayan', 'Mehewish'] },
-    { title: 'Brothers', names: ['Ateshyam', 'Arbab', 'Aanwar', 'Aamant', 'Arman'] },
-    { title: 'Sisters', names: ['Sawa Kanwal', 'Tarranum', 'Zannat'] },
+    {
+      title: 'Our little ones',
+      photo: { src: asset('family/little-ones.jpg'), width: 1200, height: 960, alt: 'The little ones of the Sayyed family' },
+      spot: 11,
+      members: [
+        { name: 'Ameerah', x: 30, y: 24 },
+        { name: 'Mahenoor', x: 49, y: 38 },
+        { name: 'Shayan', x: 64.5, y: 20.5 },
+        { name: 'Mehewish', x: 81, y: 47.5 },
+      ],
+    },
+    {
+      title: 'Brothers',
+      photo: { src: asset('family/brothers.jpg'), width: 1400, height: 788, alt: 'The brothers of the Sayyed family' },
+      spot: 8,
+      members: [
+        { name: 'Ateshyam', x: 19.3, y: 18.6 },
+        { name: 'Mujahid', x: 37.7, y: 15.4 },
+        { name: 'Arbab', x: 60.4, y: 15.4 },
+        { name: 'Aanwar', x: 80.3, y: 15.9 },
+        { name: 'Aamant', x: 29.5, y: 46.8 },
+        { name: 'Arman', x: 50.4, y: 44.1 },
+        { name: 'Saddam', x: 72.4, y: 46.8 },
+      ],
+    },
+    {
+      title: 'Sisters',
+      photo: { src: asset('family/sisters.jpg'), width: 1400, height: 788, alt: 'The sisters of the Sayyed family' },
+      spot: 8,
+      members: [
+        { name: 'Sahin Mirza', x: 34.1, y: 15.9 },
+        { name: 'Sawa Kanwal', x: 63.7, y: 15.9 },
+        { name: 'Tarranum', x: 44, y: 39.3 },
+        { name: 'Zannat', x: 56.5, y: 40.4 },
+      ],
+    },
   ] as FamilyGroup[],
-  closing: 'and all family members',
+  closing: 'and all family members & friends',
 };
 
 export const contacts: Contact[] = [
   { name: 'Sayed Mauzam Ali', phone: '93371 85006' },
   { name: 'Sayed Ateshyam Ali', phone: '78281 44411' },
   { name: 'Sayed Iftekhar Ali', phone: '99380 72244' },
+  { name: 'Sayed Arbab Ali', phone: '82498 30390' },
 ];
 
 export const closing = {
-  message: 'Your gracious presence, warm wishes and heartfelt blessings will make our celebration truly memorable.',
-  line: 'We look forward to celebrating with you.',
+  message:
+    'Your presence is the finest gift, your smiles the loveliest blessing, and your company the making of memories we shall treasure.',
+  line: 'We look forward to welcoming you and celebrating this special occasion together.',
 };
 
 /**
@@ -126,8 +211,9 @@ export const RSVP: RsvpConfig = {
     message: 'entry.0000000007',
   },
   eventOptions: [
-    { label: 'Mehndi, Tuesday 22 December', asksArrival: false },
+    { label: 'Mehndi & Haldi, Tuesday 22 December', asksArrival: false },
     { label: 'Nikah and lunch, Wednesday 23 December', asksArrival: true },
+    { label: 'Walima, Saturday 2 January', asksArrival: false },
   ],
   arrivalSlots: ['Before 12:00 PM', '12:00 PM to 1:30 PM', '1:30 PM to 3:00 PM', 'After 3:00 PM'],
   replyBy: '',

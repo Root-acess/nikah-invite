@@ -10,6 +10,7 @@ import { Gallery } from './components/Gallery';
 import { Venue } from './components/Venue';
 import { Words } from './components/Words';
 import { Family } from './components/Family';
+import { Forgiveness } from './components/Forgiveness';
 import { Rsvp } from './components/Rsvp';
 import { Footer } from './components/Footer';
 import { MusicButton } from './components/MusicButton';
@@ -83,6 +84,7 @@ export default function App() {
         <Words />
         <Family />
         <Rsvp />
+        <Forgiveness />
       </main>
       <Footer />
       {opened && <Sparkles />}

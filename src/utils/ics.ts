@@ -23,7 +23,7 @@ export function downloadIcs(event: WeddingEvent, venue: VenueInfo, summary: stri
     'BEGIN:VALARM',
     'TRIGGER:-P1D',
     'ACTION:DISPLAY',
-    'DESCRIPTION:Nikah tomorrow',
+    `DESCRIPTION:${esc(event.title)} tomorrow`,
     'END:VALARM',
     'END:VEVENT',
     'END:VCALENDAR',

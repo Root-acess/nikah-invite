@@ -1,4 +1,4 @@
-import { poem } from '../config';
+import { quote } from '../config';
 import { Divider } from './Ornaments';
 
 export function Words() {
@@ -8,15 +8,9 @@ export function Words() {
         <h2 id="words-h" className="h2">
           A few words from the heart
         </h2>
-        <div className="words__poem" lang="hi-Latn">
-          {poem.map((couplet, i) => (
-            <p className="words__couplet" key={i}>
-              {couplet.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
-            </p>
-          ))}
-        </div>
+        <blockquote className="words__poem">
+          <p className="words__couplet">{quote}</p>
+        </blockquote>
         <Divider className="words__divider" />
       </div>
     </section>

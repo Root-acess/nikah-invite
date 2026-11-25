@@ -1,4 +1,4 @@
-import { bride, groom, nikah, tagline, venue } from '../config';
+import { bride, groom, nikah, tagline, venues } from '../config';
 import { fmtDate } from '../utils/format';
 import { Crescent, Lantern, Rosette, Stars } from './Ornaments';
 
@@ -27,7 +27,7 @@ export function Hero({ revealed }: { revealed: boolean }) {
         </h1>
         <p className="hero__sub hero__item">{tagline}</p>
         <p className="hero__date hero__item">{fmtDate(nikah.startISO)}</p>
-        <p className="hero__place hero__item">{venue.city}</p>
+        <p className="hero__place hero__item">{venues[0]?.city}</p>
       </div>
 
       <a className="hero__cue hero__item" href="#verse" aria-label="Scroll down to the invitation details">

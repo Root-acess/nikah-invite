@@ -1,7 +1,8 @@
 # Nikah invitation: Sayed Iftekhar Ali & Sagufta Anjum
 
 React + TypeScript + Vite. Animated entrance doors, drawing geometric rosette, swinging lanterns, live countdown,
-Mehndi and Nikah timeline, illustrated dulha and dulhan, venue map, photo gallery, poem, family section,
+Mehndi & Haldi, Nikah and Walima timeline, illustrated portraits of the couple, two venue maps, photo gallery, family photos
+with names on hover, forgiveness note,
 add-to-calendar, music, and an RSVP form that saves into a Google Form.
 
 ## Run it
@@ -15,7 +16,7 @@ npm run build      # outputs dist/, upload that folder to Netlify, Vercel or Git
 
 ## What to edit
 
-Everything is in `src/config.ts`: names, parents, event times, venue, poem, family, contact numbers, music
+Everything is in `src/config.ts`: names, parents, event times, venues, poem, family, contact numbers, music
 and Google Form IDs. Also check the `<title>` and description in `index.html`.
 
 ### Please confirm these (they were not on the invitation card)
@@ -24,8 +25,17 @@ and Google Form IDs. Also check the `<title>` and description in `index.html`.
   `timeLabel` in `events` if you have a time.
 - **Nikah clock time.** The card says "after Namaz-e-Zohar", and that is what guests see. For the countdown and
   the calendar file I used 1:00 PM IST. Change `startISO` in `nikah` to match the family's plan.
-- **Venue for the Mehndi.** I took "same place" to mean the Mehndi is at the same venue. The venue note says so.
-  Edit `venue.note` if that is wrong.
+- **Venue for the Mehndi & Haldi.** I took "same place" to mean the same venue as the Nikah. The venue note says so.
+- **Walima end time** (10:30 PM) is a guess, used only for the calendar file. The card says "7:30 PM onwards".
+- **Who is who in the family photos.** The names are matched to faces in `family.groups` in `src/config.ts`. The little
+  ones match left to right. For the brothers I guessed (back row left to right, then front row), so check them.
+  Change a name, or move a face with `x` and `y` (percent from the left and top of the photo).
+- **Last line of the forgiveness note.** The text you sent stopped at "Your love, ...". I wrote a placeholder ending
+  in `forgiveness.ending`. Replace it.
+- **Closing words.** I used the Walima card's closing, and changed "this special evening" to "this special
+  occasion" because the Nikah is in the afternoon. The dua and its English meaning stay above it.
+- **Hijri date** (14 Rajab 1448 AH) is shown under the countdown, as you sent it. The Islamic date can move by a day
+  with moon sighting.
 - **Arrival time slots** in `RSVP.arrivalSlots` are guesses built around a Zohar Nikah.
 - The card also lists "Sahin Mirza (Brother's wife)" under Sisters. That name was not in the text you sent, so
   it is not on the site. Add it to `family.groups` if you want it.
@@ -70,7 +80,7 @@ site as the page, which is the normal case when you deploy it.
    | Name | Short answer | | Yes |
    | Can you come? | Multiple choice | `Yes`, `No` | Yes |
    | Number of guests | Short answer | | No |
-   | Which events will you attend? | **Checkboxes** | `Mehndi, Tuesday 22 December`, `Nikah and lunch, Wednesday 23 December` | **No** |
+   | Which events will you attend? | **Checkboxes** | `Mehndi & Haldi, Tuesday 22 December`, `Nikah and lunch, Wednesday 23 December`, `Walima, Saturday 2 January` | **No** |
    | Meal | Multiple choice | `Veg`, `Non-veg` | **No** |
    | Arrival time on 23 December | Multiple choice | the four labels in `RSVP.arrivalSlots` | **No** |
    | Message | Paragraph | | No |

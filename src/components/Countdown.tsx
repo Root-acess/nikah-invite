@@ -1,4 +1,4 @@
-import { nikah } from '../config';
+import { nikah, nikahHijri } from '../config';
 import { useCountdown } from '../hooks/useCountdown';
 import { fmtDate, fmtTime } from '../utils/format';
 import { ArchOutline } from './Ornaments';
@@ -29,6 +29,12 @@ export function Countdown() {
             </div>
           ))}
         </div>
+        <p className="countdown__hijri">
+          <span>{nikahHijri.en}</span>
+          <span lang="ar" dir="rtl">
+            {nikahHijri.ar}
+          </span>
+        </p>
         <p className="countdown__when">
           {fmtDate(nikah.startISO)}, {nikah.timeLabel ?? `${fmtTime(nikah.startISO)} IST`}
         </p>

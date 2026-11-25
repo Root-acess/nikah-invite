@@ -1,14 +1,22 @@
 import { bride, groom } from '../config';
 import type { Person } from '../types';
-import { Avatar } from './Avatar';
 import { ArchOutline } from './Ornaments';
 
 function Portrait({ person, role }: { person: Person; role: string }) {
   return (
     <figure className="portrait">
       <div className="archframe">
-        <div className="archframe__art" role="img" aria-label={`Illustration of ${person.name}, the ${role}`}>
-          <Avatar kind={person.avatar} />
+        <div className="archframe__art">
+          <img
+            className="portrait__img"
+            src={person.photo}
+            alt={`Illustration of ${person.name}, the ${role}`}
+            width={900}
+            height={1200}
+            loading="lazy"
+            decoding="async"
+            style={{ objectPosition: person.photoPosition }}
+          />
         </div>
         <ArchOutline className="archframe__outline" />
       </div>
